@@ -18,14 +18,16 @@ function readDL(domContent) {
     //iterate through pageInfo object
     if (dl.page.pageInfo) {
       branch = dl.page.pageInfo;
+      console.group('page.pageInfo');
       for (var key in branch) {
         if (branch.hasOwnProperty(key) && branch[key]) {
-          console.log('pageInfo.' + key + " : " + branch[key]);
+          console.log(key + " : " + branch[key]);
         }
         else {
-          console.log('pageInfo.' + key + " : NOT DEFINED");
+          console.log(key + " : NOT DEFINED");
         }
       }
+      console.groupEnd();
     }
 
   }
