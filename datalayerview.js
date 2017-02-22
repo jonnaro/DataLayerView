@@ -11,12 +11,16 @@ function dispDL(datalayer) {
 
   console.group('w3c DataLayer View - digitalData');
 
-    //site-related
-    if (dl.siteID) { console.log('siteID : ' + dl.siteID); }
-    if (dl.siteType) { console.log('siteType : ' + dl.siteType); }
+    //iterate across top-level object
+    console.group('Top-level');
+    for (var key in dl) {
+      name = key + ' '.repeat(width - key.length);
+      val = dl[key];
 
-    //page-related
-    if (dl.pageInstanceID) { console.log('pageInstanceID : ' + dl.pageInstanceID); }
+      if (typeof val === 'object') continue; //skip objects
+      console.log(name + ' : ' + val); //display top-level variables
+    }
+    console.groupEnd();
 
     //iterate through pageInfo object
     if (dl.page.pageInfo) {
