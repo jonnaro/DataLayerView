@@ -4,25 +4,32 @@ var dataObject = window.digitalData;
 // display Data Layer (called if dataObject found on page)
 function dispDL(datalayer) {
 
-  var dl    = datalayer;
-  var width = 20; //width of left column in console display
-  var name  = "";
-  var val   = "";
+  var dl     = datalayer;
+  var width  = 20; //width of left column in console display
+  var name   = "";
+  var val    = "";
+  var lvltwo = [];
 
-  console.group('w3c DataLayer View - digitalData');
+  console.group('DataLayer Viewer: digitalData');
 
-    //iterate across top-level object
+    //TOP-LEVEL iteration
     console.group('Top-level');
     for (var key in dl) {
       name = key + ' '.repeat(width - key.length);
       val = dl[key];
 
-      if (typeof val === 'object') continue; //skip objects
+      if (typeof val === 'object') {
+        lvltwo.push(key); //add to leveltwo objects array
+        continue;
+      }
       console.log(name + ' : ' + val); //display top-level variables
     }
     console.groupEnd();
 
-    //iterate through pageInfo object
+    //LEVEL TWO iteration
+    //console.log(lvltwo);
+
+    //iterate through pageInfo object (TEMP)
     if (dl.page.pageInfo) {
       var obj = dl.page.pageInfo;
       console.group('page.pageInfo');
@@ -46,7 +53,7 @@ function dispDL(datalayer) {
 
 // look for datalayer within DOM
 if (dataObject === undefined) {
-  console.log('A Data Layer object could not be found.');
+  console.info('A Data Layer object could not be found.');
 } else {
   dispDL(dataObject);
 }
