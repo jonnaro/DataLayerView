@@ -1,7 +1,9 @@
 function readDL(domContent) {
 
-  var dl = window.digitalData;
-  var width = 10; //width of left column in console display
+  var dl    = window.digitalData;
+  var width = 20; //width of left column in console display
+  var name  = "";
+  var val   = "";
 
   console.group('digitalData - w3c Data Layer View');
 
@@ -11,20 +13,26 @@ function readDL(domContent) {
   else {
 
     //site-related
-    if (dl.siteID) { console.log('pageInstanceID : ' + dl.siteID); }
+    if (dl.siteID) { console.log('siteID : ' + dl.siteID); }
+    if (dl.siteType) { console.log('siteType : ' + dl.siteType); }
 
     //page-related
     if (dl.pageInstanceID) { console.log('pageInstanceID : ' + dl.pageInstanceID); }
 
     //iterate through pageInfo object
     if (dl.page.pageInfo) {
-      branch = dl.page.pageInfo;
+      var obj = dl.page.pageInfo;
       console.group('page.pageInfo');
-      for (var key in branch) {
+      for (var key in obj) {
+        name = key + ' '.repeat(width - key.length);
+        val = obj[key];
 
-        if (branch.hasOwnProperty(key) && branch[key]) {
-          var name = key + " ".repeat(width - key.length);
-          console.log(name + " : " + branch[key]);
+        if (val) {
+          if (val.length > 100) { //truncate lengthy values
+            val = val.substring(0,95) + '...';
+          }
+
+          console.log(name + " : " + val);
         }
       }
       console.groupEnd();
