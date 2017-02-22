@@ -1,16 +1,15 @@
-function readDL(domContent) {
+// define DOM dataLayer object
+var dataObject = window.digitalData;
 
-  var dl    = window.digitalData;
+// display Data Layer (called if dataObject found on page)
+function dispDL(datalayer) {
+
+  var dl    = datalayer;
   var width = 20; //width of left column in console display
   var name  = "";
   var val   = "";
 
   console.group('w3c DataLayer View - digitalData');
-
-  if (window.digitalData === undefined) {
-    console.log('The digitalData object is undefined.');
-  }
-  else {
 
     //site-related
     if (dl.siteID) { console.log('siteID : ' + dl.siteID); }
@@ -38,9 +37,12 @@ function readDL(domContent) {
       console.groupEnd();
     }
 
-  }
-
   console.groupEnd();
 }
 
-readDL();
+// look for datalayer within DOM
+if (dataObject === undefined) {
+  console.log('A Data Layer object could not be found.');
+} else {
+  dispDL(dataObject);
+}
