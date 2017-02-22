@@ -5,10 +5,10 @@ function readDL(domContent) {
   var name  = "";
   var val   = "";
 
-  console.group('digitalData - w3c Data Layer View');
+  console.group('w3c DataLayer View - digitalData');
 
   if (window.digitalData === undefined) {
-    console.log('The digitalData object is not defined on this page.');
+    console.log('The digitalData object is undefined.');
   }
   else {
 
