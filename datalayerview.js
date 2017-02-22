@@ -6,35 +6,43 @@ function dispDL(datalayer) {
 
   var dl     = datalayer;
   var width  = 20; //width of left column in console display
-  var name   = "";
   var val    = "";
-  var lvltwo = [];
+  var lvlone = {}; //level 1
 
   console.group('DataLayer Viewer: digitalData');
 
     //TOP-LEVEL iteration
-    console.group('Top-level');
     for (var key in dl) {
-      name = key + ' '.repeat(width - key.length);
       val = dl[key];
 
-      if (typeof val === 'object') {
-        lvltwo.push(key); //add to leveltwo objects array
-        continue;
-      }
-      console.log(name + ' : ' + val); //display top-level variables
+      if (typeof val === 'object') continue; //ignore nested objects
+      lvlone[key] = val;
     }
-    console.groupEnd();
+
+    //conditionally output top-level elements if they exist
+    if (Object.keys(lvlone).length > 0) {
+
+      console.group('Top-level');
+
+      for (var key in lvlone) {
+        var keyf = key + ' '.repeat(width - key.length) + ': ';
+        val = lvlone[key];
+        console.log(keyf + val); //display top-level variables
+      }
+
+      console.groupEnd();
+    }
+
 
     //LEVEL TWO iteration
-    //console.log(lvltwo);
+    // page.pageInfo or page.category examples
 
-    //iterate through pageInfo object (TEMP)
+    //manually iterate through pageInfo object
     if (dl.page.pageInfo) {
       var obj = dl.page.pageInfo;
       console.group('page.pageInfo');
       for (var key in obj) {
-        name = key + ' '.repeat(width - key.length);
+        var keyf = key + ' '.repeat(width - key.length) + ': ';
         val = obj[key];
 
         if (val) {
@@ -42,7 +50,7 @@ function dispDL(datalayer) {
             val = val.substring(0,95) + '...';
           }
 
-          console.log(name + " : " + val);
+          console.log(keyf + val);
         }
       }
       console.groupEnd();
@@ -53,7 +61,7 @@ function dispDL(datalayer) {
 
 // look for datalayer within DOM
 if (dataObject === undefined) {
-  console.info('A Data Layer object could not be found.');
+  console.info('A Data Layer could not be found.');
 } else {
   dispDL(dataObject);
 }
