@@ -1,6 +1,7 @@
 function readDL(domContent) {
 
   var dl = window.digitalData;
+  var width = 10; //width of left column in console display
 
   console.group('digitalData - w3c Data Layer View');
 
@@ -20,11 +21,10 @@ function readDL(domContent) {
       branch = dl.page.pageInfo;
       console.group('page.pageInfo');
       for (var key in branch) {
+
         if (branch.hasOwnProperty(key) && branch[key]) {
-          console.log(key + " : " + branch[key]);
-        }
-        else {
-          console.log(key + " : NOT DEFINED");
+          var name = key + " ".repeat(width - key.length);
+          console.log(name + " : " + branch[key]);
         }
       }
       console.groupEnd();
