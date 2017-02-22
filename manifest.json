@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+  "name": "w3c DataLayer View",
+  "version": "0.1",
+  "description": "Display the contents of a w3c-compliant Data Layer object within the console",
+  "author": "Jon Narong",
+
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+
+  "web_accessible_resources": ["datalayerview.js"],
+  "permissions": ["activeTab"]
+}
