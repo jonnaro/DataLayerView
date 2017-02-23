@@ -61,7 +61,7 @@ function dispDL(datalayer) {
 
       // level 0  => Base
       if (level == 0) {
-        level = 'base';
+        level = 'root';
       }
 
       // level 1+ => [Child Object]
@@ -90,7 +90,7 @@ function dispDL(datalayer) {
       //extract group identifier from key, based on level
       var level = array[i].split('|')[0];
       if (level == 0) {
-        level = 'base';
+        level = 'root';
       }
       if (level >= 1) {
         level = array[i].split('|')[1].split('.')[0];
