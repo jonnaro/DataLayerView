@@ -12,7 +12,6 @@
     "default_title": "View Data Layer in Console",
     "default_popup": "popup.html"
   },
-
   "content_scripts": [
     {
       "matches": [

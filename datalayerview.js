@@ -35,10 +35,10 @@ function dispDL(datalayer) {
 
       var level = (key.split(".").length - 1); //level in hierarchy
       var keyf = key + ' '.repeat(width - key.length) + ': ';
-      var sortablekey = level + '|' + keyf;
       var value = obj[key];
+      var sortablekey = level + '|' + keyf + '|' + value;
 
-      flatDL.push([sortablekey,value]);
+      flatDL.push([sortablekey,level]);
       //console.log(level + ' : ' + keyf + val);
     }
 
@@ -50,13 +50,17 @@ function dispDL(datalayer) {
   // output a nested format in console
   function output(array) {
 
+    //array key => level|element|value
+    //array val => level
     var arrayLength = array.length;
     for (var i = 0; i < arrayLength; i++) {
-      var element = array[i][0];
-
-      var value   = array[i][1];
-      //truncate length values
-      if (value.length > 100) { value= value.substring(0,95) + '...'; }
+      //extract hierarchy level from first part of key
+      var level   = array[i][0].split('|')[0];
+      //extract element from second part of key
+      var element = array[i][0].split('|')[1];
+      //extract value from third part of key and truncate lengthy values
+      var value = array[i][0].split('|')[2];
+      if (value.length > 100) { value = value.substring(0,95) + '...'; }
 
       console.log(element + value);
     }

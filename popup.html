@@ -1,19 +1,28 @@
-<html><head></head>
+<html>
+<head>
+<style>
+body {
+  width: 200px;
+}
+</style>
+</head>
 <body>
-<div style="width:200px">
-<h3>Data Layer View</h3>
-This dialog is not yet working.
-<br><br>
+  <h3>Data Layer View</h3>
+  This dialog is not yet working.
+  <br><br>
 
-<b>Data Layer Object</b><br>
-digitalData
+  <b>Data Layer Object</b><br>
+  digitalData
 
-<br><br><br>
-<b>Toggle Console Output</b>
-<form id="toggle">
-<input type="radio" name="status" value="Enable" checked>Enable<br>
-<input type="radio" name="status" value="Disable">Disable
-</form>
-</div>
+  <br><br><br>
+  <b>Toggle Console Output</b>
+  <table>
+    <tr>
+      <td><button id="enable">Enable</button></td>
+      <td><button id="disable">Disable</button></td>
+    </tr>
+  </table>
+
+<script src="popup.js"></script>
 </body>
 </html>
