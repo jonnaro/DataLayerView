@@ -4,25 +4,28 @@
 body {
   width: 200px;
 }
+button {
+  display: inline-block;
+  line-height: 1.8;
+  appearance: none;
+  box-shadow: none;
+  border-radius: 0;
+  width: 120px;
+}
 </style>
+<script src="popup.js"></script>
 </head>
 <body>
-  <h3>Data Layer View</h3>
-  This dialog is not yet working.
-  <br><br>
+  <h3>Data Layer View Status</h3>
 
   <b>Data Layer Object</b><br>
-  digitalData
+  <div id="datalayer-object">digitalData</div>
+  <br>
 
-  <br><br><br>
-  <b>Toggle Console Output</b>
   <table>
     <tr>
-      <td><button id="enable">Enable</button></td>
-      <td><button id="disable">Disable</button></td>
+      <td><button id="toggle"><span id="status">Status</span></button></td>
     </tr>
   </table>
-
-<script src="popup.js"></script>
 </body>
 </html>
