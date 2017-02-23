@@ -38,8 +38,7 @@ function dispDL(datalayer) {
       var value = obj[key];
       var sortablekey = level + '|' + keyf + '|' + value;
 
-      flatDL.push([sortablekey,level]);
-      //console.log(level + ' : ' + keyf + val);
+      flatDL.push(sortablekey);
     }
 
     var output = flatDL.sort(); //sort flattened data Layer
@@ -50,27 +49,70 @@ function dispDL(datalayer) {
   // output a nested format in console
   function output(array) {
 
-    //array key => level|element|value
-    //array val => level
+    //array value => level|element|value
     var arrayLength = array.length;
 
+    //delineate objects into groups
+    // level 1+ => [Child Object]
+    var a = [], b = [], prev;
     for (var i = 0; i < arrayLength; i++) {
-      //extract hierarchy level from first part of key
-      var level = array[i][0].split('|')[0];
-      var next = array[(i+1) % array.length][1]; // level for next element
+
+      var level = array[i].split('|')[0];
+
+      // level 0  => Base
+      if (level == 0) {
+        level = 'base';
+      }
+
+      // level 1+ => [Child Object]
+      if (level >= 1) {
+        level = array[i].split('|')[1].split('.')[0];
+      }
+
+      if (level !== prev) {
+        a.push(level);
+        b.push(1);
+      } else {
+        b[b.length-1]++;
+      }
+      prev = level;
+
+    }
+
+    var groups = {};
+    for (var i = 0; i < a.length; i++) {
+      groups[a[i]] = b[i];
+    }
+
+    //output elements
+    var groupCount = 0;
+    for (var i = 0; i < arrayLength; i++) {
+      //extract group identifier from key, based on level
+      var level = array[i].split('|')[0];
+      if (level == 0) {
+        level = 'base';
+      }
+      if (level >= 1) {
+        level = array[i].split('|')[1].split('.')[0];
+      }
       //extract element from second part of key
-      var element = array[i][0].split('|')[1];
+      var element = array[i].split('|')[1];
       //extract value from third part of key and truncate lengthy values
-      var value = array[i][0].split('|')[2];
+      var value = array[i].split('|')[2];
       if (value.length > 100) { value = value.substring(0,95) + '...'; }
 
-      //start top-level group
-      if ((i == 0) & (level == 0)) { console.group('Base Object'); }
+      // group outputs
+      groupCount++;
+
+      if (groupCount == 1) { console.group(level); }
 
       console.log(element + value);
 
-      //end top level group
-      if ((level == 0) & (next > level)) { console.groupEnd(); }
+      if (groupCount == groups[level]) {
+        console.groupEnd();
+        groupCount = 0;
+      }
+
 
     }
 
