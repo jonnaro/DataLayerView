@@ -53,16 +53,25 @@ function dispDL(datalayer) {
     //array key => level|element|value
     //array val => level
     var arrayLength = array.length;
+
     for (var i = 0; i < arrayLength; i++) {
       //extract hierarchy level from first part of key
-      var level   = array[i][0].split('|')[0];
+      var level = array[i][0].split('|')[0];
+      var next = array[(i+1) % array.length][1]; // level for next element
       //extract element from second part of key
       var element = array[i][0].split('|')[1];
       //extract value from third part of key and truncate lengthy values
       var value = array[i][0].split('|')[2];
       if (value.length > 100) { value = value.substring(0,95) + '...'; }
 
+      //start top-level group
+      if ((i == 0) & (level == 0)) { console.group('Base Object'); }
+
       console.log(element + value);
+
+      //end top level group
+      if ((level == 0) & (next > level)) { console.groupEnd(); }
+
     }
 
   }
