@@ -5,58 +5,74 @@ var dataObject = window.digitalData;
 function dispDL(datalayer) {
 
   var dl     = datalayer;
-  var width  = 20; //width of left column in console display
+  var width  = 40; //width of left column in console display
   var val    = "";
   var lvlone = {}; //level 1
 
-  console.group('DataLayer Viewer: digitalData');
+  //flatten nested object
+  function flatten(ob) {
+    var toReturn = {};
 
-    //TOP-LEVEL iteration
-    for (var key in dl) {
-      val = dl[key];
+  	for (var i in ob) {
+  		if (!ob.hasOwnProperty(i)) continue;
+  		if ((typeof ob[i]) == 'object') {
+  			var flatObject = flatten(ob[i]);
+  			for (var x in flatObject) {
+  				if (!flatObject.hasOwnProperty(x)) continue;
+  				toReturn[i + '.' + x] = flatObject[x];
+  			}
+  		} else {
+  			toReturn[i] = ob[i];
+  		}
+  	}
+  	return toReturn;
+  };
 
-      if (typeof val === 'object') continue; //ignore nested objects
-      lvlone[key] = val;
+  // input a flatted data layer object
+  // output a sorted data layer array with hierarchy level
+  function format(obj) {
+    var flatDL = [];
+
+    for (var key in obj) {
+
+      var level = (key.split(".").length - 1); //level in hierarchy
+      var keyf = key + ' '.repeat(width - key.length) + ': ';
+      var sortablekey = level + '|' + keyf;
+      val = obj[key];
+
+      flatDL.push([sortablekey,val]);
+      //console.log(level + ' : ' + keyf + val);
     }
 
-    //conditionally output top-level elements if they exist
-    if (Object.keys(lvlone).length > 0) {
+    var output = flatDL.sort(); //sort flattened data Layer
+    return output;
+  }
 
-      console.group('Top-level');
+  // input a sorted and flattened data layer array
+  // output a nested format in console
+  function output(array) {
 
-      for (var key in lvlone) {
-        var keyf = key + ' '.repeat(width - key.length) + ': ';
-        val = lvlone[key];
-        console.log(keyf + val); //display top-level variables
-      }
+    var arrayLength = array.length;
+    for (var i = 0; i < arrayLength; i++) {
+      var element = array[i][0];
 
-      console.groupEnd();
+      var value   = array[i][1];
+      //truncate length values
+      if (value.length > 100) { value= value.substring(0,95) + '...'; }
+
+      console.log(element + value);
     }
 
+  }
 
-    //LEVEL TWO iteration
-    // page.pageInfo or page.category examples
+  //flatten, format, and output the data layer
+  console.group('Data Layer View: digitalData')
 
-    //manually iterate through pageInfo object
-    if (dl.page.pageInfo) {
-      var obj = dl.page.pageInfo;
-      console.group('page.pageInfo');
-      for (var key in obj) {
-        var keyf = key + ' '.repeat(width - key.length) + ': ';
-        val = obj[key];
-
-        if (val) {
-          if (val.length > 100) { //truncate lengthy values
-            val = val.substring(0,95) + '...';
-          }
-
-          console.log(keyf + val);
-        }
-      }
-      console.groupEnd();
-    }
+  output(format(flatten(dl)));
 
   console.groupEnd();
+  ////////////////////////////////////
+
 }
 
 // look for datalayer within DOM
