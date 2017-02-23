@@ -5,9 +5,6 @@ var dataObject = window.digitalData;
 function dispDL(datalayer) {
 
   var dl     = datalayer;
-  var width  = 40; //width of left column in console display
-  var val    = "";
-  var lvlone = {}; //level 1
 
   //flatten nested object
   function flatten(ob) {
@@ -32,15 +29,16 @@ function dispDL(datalayer) {
   // output a sorted data layer array with hierarchy level
   function format(obj) {
     var flatDL = [];
+    var width  = 40; //width of left column in console display
 
     for (var key in obj) {
 
       var level = (key.split(".").length - 1); //level in hierarchy
       var keyf = key + ' '.repeat(width - key.length) + ': ';
       var sortablekey = level + '|' + keyf;
-      val = obj[key];
+      var value = obj[key];
 
-      flatDL.push([sortablekey,val]);
+      flatDL.push([sortablekey,value]);
       //console.log(level + ' : ' + keyf + val);
     }
 

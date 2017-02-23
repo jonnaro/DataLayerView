@@ -2,11 +2,16 @@
   "manifest_version": 2,
   "name": "Data Layer View",
   "version": "0.1",
-  "description": "Display the contents of a w3c-compliant Data Layer object within the console",
+  "description": "Display the contents of a w3c-compliant Data Layer within the console",
   "author": "Jon Narong",
   "icons": { "16": "icon16.png",
              "48": "icon48.png",
             "128": "icon128.png" },
+  "browser_action": {
+    "default_icon": "icon48.png",
+    "default_title": "View Data Layer in Console",
+    "default_popup": "popup.html"
+  },
 
   "content_scripts": [
     {
