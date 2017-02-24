@@ -11,10 +11,15 @@ chrome.storage.sync.get({dlvstatus: 'true', dlvobject: 'digitalData'},
   function(config) {
     //console.log('Data Layer View Status : ' + config.dlvstatus);
     //console.log('Data Layer View Object : ' + config.dlvobject);
-    chrome.runtime.sendMessage(config);
-
     if (config.dlvstatus == 'true') {
       injectScript(chrome.extension.getURL('datalayerview.js'), 'body');
+
+      setTimeout(function () {
+        window.postMessage({ type: 'datalayer_config',
+                             text: config.dlvobject},
+                             '*' /* targetOrigin: any */ );
+      }, 1000);
+
     }
 
 });

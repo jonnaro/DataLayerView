@@ -1,5 +1,16 @@
-// define DOM dataLayer object
-var datalayer_string = "digitalData";
+var datalayer_string = "";
+
+// look for datalayer within DOM
+window.addEventListener('message', function(e) {
+    if (e.data.type && (e.data.type == 'datalayer_config')) {
+
+      console.log('Looking for the (' +e.data.text+ ') data layer...');
+
+      datalayer_string = e.data.text;
+      var object = window[datalayer_string];
+      init(object);
+    }
+});
 
 // display Data Layer (called if dataObject found on page)
 function init(datalayer) {
@@ -126,14 +137,4 @@ function init(datalayer) {
   console.groupEnd();
   ////////////////////////////////////
 
-}
-
-// look for datalayer within DOM
-var object = window[datalayer_string];
-
-if (object === undefined) {
-  console.log('ERROR: A data layer object is not defined.');
-} else {
-  console.log('Looking for the (' +datalayer_string+ ') data layer object...');
-  init(object);
-}
+};

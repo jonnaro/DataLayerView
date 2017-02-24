@@ -12,10 +12,6 @@
     "default_title": "View Data Layer"
   },
   "options_page": "options.html",
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": true
-  },
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
