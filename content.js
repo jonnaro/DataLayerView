@@ -6,21 +6,15 @@ function injectScript(file_path, tag) {
     node.appendChild(script);
 }
 
-// Receive messages from popup.js
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
+// get config options from local storage
+chrome.storage.sync.get({dlvstatus: 'true', dlvobject: 'digitalData'},
+  function(config) {
+    //console.log('Data Layer View Status : ' + config.dlvstatus);
+    //console.log('Data Layer View Object : ' + config.dlvobject);
+    chrome.runtime.sendMessage(config);
 
-        if (request.message == "enable") {
-          console.log("Data Layer View has been enabled.");
-          sendResponse({notification: "enable_success"});
-        }
-
-        if (request.message == "disable") {
-          console.log("Data Layer View has been disabled.");
-          sendResponse({notification: "disable_success"});
-        }
+    if (config.dlvstatus == 'true') {
+      injectScript(chrome.extension.getURL('datalayerview.js'), 'body');
+    }
 
 });
-
-// Run on each page load
-injectScript(chrome.extension.getURL('datalayerview.js'), 'body');
