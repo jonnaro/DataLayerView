@@ -1,10 +1,10 @@
 // define DOM dataLayer object
-var dataObject = window.digitalData;
+var datalayer_string = "digitalData";
 
 // display Data Layer (called if dataObject found on page)
-function dispDL(datalayer) {
+function init(datalayer) {
 
-  var dl     = datalayer;
+  var dl = datalayer;
 
   //flatten nested object
   function flatten(ob) {
@@ -119,7 +119,7 @@ function dispDL(datalayer) {
   }
 
   //flatten, format, and output the data layer
-  console.group('Data Layer View: digitalData')
+  console.group('Data Layer View: ' + datalayer_string);
 
   output(format(flatten(dl)));
 
@@ -129,8 +129,11 @@ function dispDL(datalayer) {
 }
 
 // look for datalayer within DOM
-if (dataObject === undefined) {
-  console.info('A Data Layer could not be found.');
+var object = window[datalayer_string];
+
+if (object === undefined) {
+  console.log('ERROR: A data layer object is not defined.');
 } else {
-  dispDL(dataObject);
+  console.log('Looking for the (' +datalayer_string+ ') data layer object...');
+  init(object);
 }

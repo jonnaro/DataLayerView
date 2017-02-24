@@ -1,0 +1,54 @@
+<html>
+<head>
+<style>
+body {
+  padding: 20px;
+}
+button {
+  display: inline-block;
+  line-height: 2.0;
+  appearance: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+td {
+  vertical-align: bottom;
+  padding: 5px;
+}
+td.name {
+  text-align: right;
+}
+td.value {
+  font-weight: bold;
+}
+</style>
+<title>Data Layer View Extension Options</title>
+</head>
+<body>
+  <h1>Data Layer View Configuration</h1>
+  Easily view a Data Layer from within the console.
+
+  <br><br>
+  <table>
+    <tr>
+      <td class="name">Data Layer Object</td>
+      <td class="value"><input type="text" id="datalayer_object" value="..."></td>
+    </tr>
+    <tr>
+      <td class="name">Status</td>
+      <td class="value">
+        <select id="toggle">
+         <option value="true">enable</option>
+         <option value="false">disable</option>
+         </select>
+      </td>
+    </tr>
+  </table>
+<br><br>
+
+<div id="status"></div>
+<button id="saveBtn">Save</button>
+
+<script src="options.js"></script>
+</body>
+</html>
