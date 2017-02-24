@@ -1,54 +1,55 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<style>
-body {
-  padding: 20px;
-}
-button {
-  display: inline-block;
-  line-height: 2.0;
-  appearance: none;
-  box-shadow: none;
-  border-radius: 0;
-}
-td {
-  vertical-align: bottom;
-  padding: 5px;
-}
-td.name {
-  text-align: right;
-}
-td.value {
-  font-weight: bold;
-}
-</style>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Data Layer View Extension Options</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
-  <h1>Data Layer View Configuration</h1>
-  Easily view a Data Layer from within the console.
+<div class="container">
 
-  <br><br>
-  <table>
-    <tr>
-      <td class="name">Data Layer Object</td>
-      <td class="value"><input type="text" id="datalayer_object" value="..."></td>
-    </tr>
-    <tr>
-      <td class="name">Status</td>
-      <td class="value">
-        <select id="toggle">
-         <option value="true">enable</option>
-         <option value="false">disable</option>
-         </select>
-      </td>
-    </tr>
-  </table>
-<br><br>
+<div class="col-sm-12">
+<h1>Data Layer View Configuration</h1>
+<p>Easily view a Data Layer from within the console.</p>
+</div>
 
+<div class="col-sm-12">
+<form class="form-horizontal">
+  <div class="form-group">
+   <label for="datalayer_object" class="col-sm-2 control-label">Data Layer Object</label>
+   <div class="col-sm-10">
+   <input type="text" class="form-control" id="datalayer_object" placeholder="...">
+  </div>
+ </div>
+
+ <div class="form-group">
+  <label for="toggle" class="col-sm-2 control-label">Status</label>
+  <div class="col-sm-10">
+   <select class="form-control" id="toggle">
+    <option value="true">enable</option>
+    <option value="false">disable</option>
+   </select>
+  </div>
+ </div>
+
+ <div class="form-group">
+   <div class="col-sm-offset-2 col-sm-10">
+     <button id="saveBtn" class="btn btn-primary">Save</button>
+   </div>
+ </div>
+
+</form>
+
+</div>
+
+<div class="col-sm-12">
 <div id="status"></div>
-<button id="saveBtn">Save</button>
+</div>
 
 <script src="options.js"></script>
+
+</div>
 </body>
 </html>
