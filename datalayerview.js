@@ -4,11 +4,17 @@ var datalayer_string = "";
 window.addEventListener('message', function(e) {
     if (e.data.type && (e.data.type == 'datalayer_config')) {
 
-      console.log('Looking for the (' +e.data.text+ ') data layer...');
-
       datalayer_string = e.data.text;
       var object = window[datalayer_string];
-      init(object);
+
+      //only run extension if data layer object was found.
+      console.log('Looking for the (' + e.data.text + ') data layer...');
+      if (object) {
+        init(object);
+      } else {
+        console.log(e.data.text + ' was not found on this page.')
+      }
+
     }
 });
 
@@ -96,6 +102,7 @@ function init(datalayer) {
     }
 
     //output elements
+    console.group('Data Layer View: ' + datalayer_string);
     var groupCount = 0;
     for (var i = 0; i < arrayLength; i++) {
       //extract group identifier from key, based on level
@@ -124,17 +131,17 @@ function init(datalayer) {
         groupCount = 0;
       }
 
-
     }
+    console.groupEnd();
 
   }
 
   //flatten, format, and output the data layer
-  console.group('Data Layer View: ' + datalayer_string);
+  //console.group('Data Layer View: ' + datalayer_string);
 
   output(format(flatten(dl)));
 
-  console.groupEnd();
+  //console.groupEnd();
   ////////////////////////////////////
 
 };
