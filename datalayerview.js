@@ -46,12 +46,16 @@ function init(datalayer) {
   // output a sorted data layer array with hierarchy level
   function format(obj) {
     var flatDL = [];
-    var width  = 40; //width of left column in console display
+    var width  = 40; //default width of left column in console display
 
     for (var key in obj) {
 
       var level = (key.split(".").length - 1); //level in hierarchy
-      var keyf = key + ' '.repeat(width - key.length) + ': ';
+
+      // output formatting
+      var whitespace = Math.abs(width - key.length); // to get alignment
+      var keyf = key + ' '.repeat(whitespace) + ': ';
+
       var value = obj[key];
       var sortablekey = level + '|' + keyf + '|' + value;
 
@@ -102,7 +106,6 @@ function init(datalayer) {
     }
 
     //output elements
-    console.group('Data Layer View: ' + datalayer_string);
     var groupCount = 0;
     for (var i = 0; i < arrayLength; i++) {
       //extract group identifier from key, based on level
@@ -132,15 +135,14 @@ function init(datalayer) {
       }
 
     }
-    console.groupEnd();
 
   }
 
   //flatten, format, and output the data layer
   //console.group('Data Layer View: ' + datalayer_string);
-
+  console.group('Data Layer View: ' + datalayer_string);
   output(format(flatten(dl)));
-
+  console.groupEnd();
   //console.groupEnd();
   ////////////////////////////////////
 
