@@ -9,11 +9,12 @@ function injectScript(file_path, tag) {
 // get config options from local storage
 chrome.storage.sync.get({dlvstatus: 'true', dlvobject: 'digitalData'},
   function(config) {
-    //console.log('Data Layer View Status : ' + config.dlvstatus);
-    //console.log('Data Layer View Object : ' + config.dlvobject);
+
+    // only inject script if status is set to true
     if (config.dlvstatus == 'true') {
       injectScript(chrome.extension.getURL('datalayerview.js'), 'body');
 
+      //send message to injected script with name of datalayer object
       setTimeout(function () {
         window.postMessage({ type: 'datalayer_config',
                              text: config.dlvobject},

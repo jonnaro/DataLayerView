@@ -1,16 +1,16 @@
 var datalayer_string = "";
 
-// look for datalayer within DOM
+// listen for message from content.js with name of object
 window.addEventListener('message', function(e) {
     if (e.data.type && (e.data.type == 'datalayer_config')) {
 
       datalayer_string = e.data.text;
-      var object = window[datalayer_string];
+      var obj = window[datalayer_string];
 
       //only run extension if data layer object was found.
       console.log('Looking for the (' + e.data.text + ') data layer...');
-      if (object) {
-        init(object);
+      if (obj) {
+        readObject(obj);
       } else {
         console.log(e.data.text + ' was not found on this page.')
       }
@@ -18,8 +18,8 @@ window.addEventListener('message', function(e) {
     }
 });
 
-// display Data Layer (called if dataObject found on page)
-function init(datalayer) {
+// process and output data layer object (only executed if found on page)
+function readObject(datalayer) {
 
   var dl = datalayer;
 
@@ -139,11 +139,9 @@ function init(datalayer) {
   }
 
   //flatten, format, and output the data layer
-  //console.group('Data Layer View: ' + datalayer_string);
   console.group('Data Layer View: ' + datalayer_string);
   output(format(flatten(dl)));
   console.groupEnd();
-  //console.groupEnd();
   ////////////////////////////////////
 
 };
