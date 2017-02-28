@@ -29,6 +29,8 @@ function readObject(datalayer) {
 
   	for (var i in ob) {
   		if (!ob.hasOwnProperty(i)) continue;
+      if (typeof ob[i] === 'function') continue; //ignore embedded function reference
+
   		if ((typeof ob[i]) == 'object') {
   			var flatObject = flatten(ob[i]);
   			for (var x in flatObject) {
