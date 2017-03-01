@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Data Layer View",
-  "version": "0.1",
+  "version": "1.0",
   "description": "Display the contents of a w3c-compliant Data Layer within the console",
   "author": "Jon Narong",
   "icons": { "16": "icon16.png",
@@ -19,7 +19,6 @@
       "run_at": "document_end"
     }
   ],
-
   "web_accessible_resources": ["datalayerview.js"],
   "permissions": ["activeTab", "storage"]
 }
