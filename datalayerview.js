@@ -53,6 +53,7 @@ function readObject(datalayer) {
     for (var key in obj) {
 
       var level = (key.split(".").length - 1); //level in hierarchy
+      if (level >= 1) { level = 1; } //fixes sort issue with duplicate parents
 
       // output formatting
       var whitespace = Math.abs(width - key.length); // to get alignment
@@ -77,28 +78,28 @@ function readObject(datalayer) {
 
     //delineate objects into groups
     // level 1+ => [Child Object]
-    var a = [], b = [], prev;
+    var a = [], b = [], prev, parent;
     for (var i = 0; i < arrayLength; i++) {
 
       var level = array[i].split('|')[0];
 
-      // level 0  => Base
+      // level 0  => root
       if (level == 0) {
-        level = 'root';
+        parent = 'root';
       }
 
       // level 1+ => [Child Object]
       if (level >= 1) {
-        level = array[i].split('|')[1].split('.')[0];
+        parent = array[i].split('|')[1].split('.')[0];
       }
 
-      if (level !== prev) {
-        a.push(level);
+      if (parent !== prev) {
+        a.push(parent);
         b.push(1);
       } else {
         b[b.length-1]++;
       }
-      prev = level;
+      prev = parent;
 
     }
 
@@ -113,10 +114,10 @@ function readObject(datalayer) {
       //extract group identifier from key, based on level
       var level = array[i].split('|')[0];
       if (level == 0) {
-        level = 'root';
+        parent = 'root';
       }
       if (level >= 1) {
-        level = array[i].split('|')[1].split('.')[0];
+        parent = array[i].split('|')[1].split('.')[0];
       }
       //extract element from second part of key
       var element = array[i].split('|')[1];
@@ -127,11 +128,11 @@ function readObject(datalayer) {
       // group outputs
       groupCount++;
 
-      if (groupCount == 1) { console.group(level); }
+      if (groupCount == 1) { console.group(parent); }
 
       console.log(element + value);
 
-      if (groupCount == groups[level]) {
+      if (groupCount == groups[parent]) {
         console.groupEnd();
         groupCount = 0;
       }
