@@ -1,8 +1,18 @@
 // save configuration options
 function save_options() {
-  //get form selections from options.html
-  var toggle_status = document.getElementById('toggle').value;
-  var datalayer_object = document.getElementById('datalayer_object').value;
+  //default configuration
+  var toggle_status = 'true';
+  var datalayer_object = 'digitalData';
+
+  //toggle status selection (options.html)
+  if (document.getElementById('toggle_enable').checked) {
+    toggle_status = 'true';
+  } else if (document.getElementById('toggle_disable').checked) {
+    toggle_status = 'false';
+  }
+
+  //object name configuration (options.html)
+  datalayer_object = document.getElementById('datalayer_object').value;
 
   //save in chrome.storage
   chrome.storage.sync.set({
@@ -13,7 +23,6 @@ function save_options() {
     var status = document.getElementById('status');
     status.textContent = 'Options saved.';
     setTimeout(function() { status.textContent = ''; }, 750);
-    console.log('Data Layer View Configuration updated.');
   });
 }
 
@@ -24,8 +33,15 @@ function restore_options() {
     dlvstatus: true,
     dlvobject: 'digitalData'
   }, function(config) {
-    document.getElementById('toggle').value = config.dlvstatus;
     document.getElementById('datalayer_object').value = config.dlvobject;
+
+    if (config.dlvstatus == 'true') {
+      document.getElementById('toggle_enable').checked = true;
+      console.log('Data Layer View is currently enabled');
+    } else if (config.dlvstatus == 'false') {
+      document.getElementById('toggle_disable').checked = true;
+      console.log('Data Layer View is currently disabled');
+    }
   });
 }
 
